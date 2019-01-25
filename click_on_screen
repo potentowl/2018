@@ -1,0 +1,14 @@
+import pyautogui
+import time
+from time import sleep
+
+print('Press Ctrl-C to quit.')
+try:
+    while True:
+        pyautogui.FAILSAFE = True
+        pyautogui.click(46,400); pyautogui.typewrite('8')
+        time.sleep(2)
+        pyautogui.click(46,400); pyautogui.keyDown('enter'); pyautogui.keyUp('enter')
+        time.sleep(1500)   
+except KeyboardInterrupt:
+    print('\nDone.')
