@@ -451,6 +451,10 @@ try:
         print('\b' * len(positionStr), end='', flush=True)
 except KeyboardInterrupt:
     print('\nDone.')
+    
+#EASY
+import pyautogui
+pyautogui.displayMousePosition()
 ----------------------------------------------------------Twitter-keys----------------
 # Save Key File In Same Directory As Python Scripts For Twitter
 # Twitter用のPythonスクリプトと同じディレクトリにキーファイルを保存する
@@ -612,4 +616,7 @@ try:
         time.sleep(2)
 except KeyboardInterrupt:
     print('\nDone.')c
+---------------------------------------------------------------------------------------
+import os
+os.system("espeak 'mint.'")
 ---------------------------------------------------------------------------------------
