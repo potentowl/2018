@@ -415,4 +415,201 @@ with smart_run(session):
     tcpdump
     runlevel
     dmesg
-    ----------------------------------------------------------------------------------------
+ ----------------------------------------------------------CCTV------------------------
+import picamera
+import datetime as dt
+
+with picamera.PiCamera() as camera:
+    camera.resolution = (1280, 720)
+    camera.framerate = 24
+    # window.1(180,180,640,480) window.2(30,770,380,380)
+    camera.start_preview(fullscreen=False, alpha=245, window = (30,770,380,380))
+    camera.annotate_background = picamera.Color('black')
+    camera.annotate_text = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    camera.start_recording('/media/pi/usbname/cctv.h264')
+    start = dt.datetime.now()
+    while (dt.datetime.now() - start).seconds < 604800:
+        camera.annotate_text = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        camera.wait_recording(0.2)
+    camera.stop_recording()
+    camera.stop_preview()
+----------------------------------------------------------Mouse-location--------------
+#! python3
+# mouseNow.py - Displays the mouse cursor's current position.
+import pyautogui
+print('Press Ctrl-C to quit.')
+try:
+    while True:
+        x, y = pyautogui.position()
+        positionStr = 'X: ' + str(x).rjust(4) + ' Y: ' + str(y).rjust(4)
+        positionStr = 'X: ' + str(x).rjust(4) + ' Y: ' + str(y).rjust(4)
+        pixelColor = pyautogui.screenshot().getpixel((x, y))
+        positionStr += ' RGB: (' + str(pixelColor[0]).rjust(3)
+        positionStr += ', ' + str(pixelColor[1]).rjust(3)
+        positionStr += ', ' + str(pixelColor[2]).rjust(3) + ')'
+        print(positionStr, end='')
+        print('\b' * len(positionStr), end='', flush=True)
+except KeyboardInterrupt:
+    print('\nDone.')
+----------------------------------------------------------Twitter-keys----------------
+# Save Key File In Same Directory As Python Scripts For Twitter
+# Twitter用のPythonスクリプトと同じディレクトリにキーファイルを保存する
+
+keys = dict(
+    screen_name = 'screen_name',
+    consumer_key =          'consumer_key'
+    consumer_secret =       'consumer_secret',
+    access_token =          'access_token',
+    access_token_secret =   'access_token_secret',
+)
+----------------------------------------------------------Twitter-retweet-------------
+#!/usr/bin/python
+#Import TwythonError now too!
+from twython import Twython, TwythonError
+import time
+from time import sleep
+
+# sudo chmod +x /home/user/mainbot/twitter/retweet.py
+
+app_key = ""
+app_secret = ""
+oauth_token = ""
+oauth_token_secret = ""
+
+twitter = Twython(app_key, app_secret, oauth_token, oauth_token_secret)
+
+#Setting Twitter's search results as a variable
+
+search_results = twitter.search(q="giveaways", "yourhashtag", count=6)
+try:
+    for tweet in search_results["statuses"]:
+        try:
+            twitter.retweet(id = tweet["id_str"])
+        except TwythonError as e:
+            print ("e")
+except TwythonError as e:
+    print ("e")
+----------------------------------------------------------Twitter-unfollow-------------
+#! /usr/bin/python
+import tweepy
+import time
+import random
+from random import randint
+from time import sleep
+from keys import keys
+
+SCREEN_NAME = keys['screen_name']
+CONSUMER_KEY = keys['consumer_key']
+CONSUMER_SECRET = keys['consumer_secret']
+ACCESS_TOKEN = keys['access_token']
+ACCESS_TOKEN_SECRET = keys['access_token_secret']
+
+auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+
+followers = api.followers_ids(SCREEN_NAME)
+friends = api.friends_ids(SCREEN_NAME)
+
+for f in friends:
+    if f not in followers:
+        print "Unfollow {0}?" .format(api.get_user(f).screen_name)
+        api.destroy_friendship(f)
+        time.sleep(randint(30,60))
+----------------------------------------------------------Multi-Lights-----------------
+# -*- coding: utf-8 -*-
+
+# blue wire neutral (main ground) a1 gray wire-GPIO.pin.17/d1-g1 resistor/j1-cled positive wire(longer led wire) repeat for each led.
+
+
+import RPi.GPIO as GPIO
+import time
+import random
+from random import randint
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.OUT)
+GPIO.setup(18, GPIO.OUT)
+GPIO.setup(22, GPIO.OUT)
+GPIO.setup(23, GPIO.OUT)
+GPIO.setup(24, GPIO.OUT)
+GPIO.setup(25, GPIO.OUT)
+print('Press Ctrl-C to quit.')
+while True:
+    try:
+        GPIO.output(random.randint(17,25), True)
+        time.sleep(1)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        GPIO.output(random.randint(17,25), False)
+        time.sleep(0.5)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        GPIO.output(random.randint(17,25), True)
+        time.sleep(1)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        GPIO.output(random.randint(17,25), False)
+        time.sleep(0.5)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        GPIO.output(random.randint(17,25), True)
+        time.sleep(1)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        GPIO.output(random.randint(17,25), False)
+        time.sleep(0.5)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        GPIO.output(random.randint(17,25), True)
+        time.sleep(1)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        GPIO.output(random.randint(17,25), False)
+        time.sleep(0.5)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        GPIO.output(random.randint(17,25), True)
+        time.sleep(1)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        GPIO.output(random.randint(17,25), False)
+        time.sleep(0.5)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        GPIO.output(random.randint(17,25), True)
+        time.sleep(1)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        GPIO.output(random.randint(17,25), False)
+        time.sleep(0.5)
+        print('\033[37m' '\033[41m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+        print('\033[37m' '\033[42m' '\033[1m' + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀グッドモーニングセンパイ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + "\033[1m"'\n')
+    except Exception:
+        pass
+    except KeyboardInterrupt:
+       print('\nDone.')
+----------------------------------------------------------Multi-Lights2----------------
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(18,GPIO.OUT)
+print('Press Ctrl-C to quit.')
+try:
+    while True:
+        print "led on"
+        GPIO.output(18,GPIO.HIGH)
+        time.sleep(3)
+        print "led off"
+        GPIO.output(18,GPIO.LOW)
+        time.sleep(2)
+        print "led on"
+        GPIO.output(18,GPIO.HIGH)
+        time.sleep(3)
+        print "led off"
+        GPIO.output(18,GPIO.LOW)
+        time.sleep(2)
+except KeyboardInterrupt:
+    print('\nDone.')c
+---------------------------------------------------------------------------------------
