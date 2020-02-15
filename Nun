@@ -1,0 +1,418 @@
+---------------------------------------------------INSTALL PYTHON 3.6-----------------------
+
+    sudo apt-get install python3-dev libffi-dev libssl-dev
+    wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tgz  
+    tar xvf Python-3.6.3.tgz
+    cd Python-3.6.3
+    ./configure --enable-optimizations  
+    make -j8  
+    sudo make altinstall
+    python3.6
+    gpg --keyserver hkp://keys.gnupg.net --recv-keys XXXXXXXX
+    gpg --keyserver hkp://keys.gnupg.net --recv-keys XXXXXXXXXXXXXXXXXXXXXX
+			
+-------------------------------------------------------VirtualBox----------------------------
+    sudo apt install virtualbox
+    sudo apt install virtualbox-qt
+    virtualbox
+    sudo apt install virtualbox-ext-pack
+    sudo apt remove virtualbox
+    sudo apt purge virtualbox
+    Select Preferences from the File menu and then select the Extensions option from the left panel of the following Preferences view:
+    ----------------------------------------------------------RASPI SETUP 1----------------------
+    
+    Replace the file /usr/share/plymouth/themes/pix/splash.png with your own (or just remove it for a blank screen)
+
+    Add logo.nologo to the end of the line in /boot/cmdline.txt to remove the four raspberries (on pi3)
+
+    sudo nano /etc/rc.local
+    omxplayer /path/mint/is/awesome.mp4 &
+    omxplayer --loop /path/mint/is/awesome.mp4 &
+    Remove splash screen
+    sudo raspi-config boot options
+    Remove Rainbow Screen
+    sudo nano /boot/config.txt
+    Then add below line at the end of the file.
+    disable_splash=1
+    Remove text message under splash image:
+    Open “/usr/share/plymouth/themes/pix/pix.script” as root.
+    sudo nano /usr/share/plymouth/themes/pix/pix.script
+    Then, remove (or comment out) four lines below:
+    message_sprite = Sprite();
+    message_sprite.SetPosition(screen_width * 0.1, screen_height * 0.9, 10000);
+       my_image = Image.Text(text, 1, 1, 1);
+       message_sprite.SetImage(my_image);
+    Note : This is a quick and dirty method I found. It works, but there might be better way.
+    Remove Boot Messages
+    Open “/boot/cmdline.txt” as root.
+    sudo nano /boot/cmdline.txt
+    Then, replace “console=tty1” with “console=tty3”. This redirects boot messages to tty3.
+    Remove other things
+    Still in “/boot/cmdline.txt”, add below at the end of the line
+    splash quiet plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0
+    Here are brief explanations.
+    ‘splash’ : enables splash image
+    ‘quiet’ : disable boot message texts
+    ‘plymouth.ignore-serial-consoles’ : not sure about this but seems it’s required when use Plymouth.
+    ‘logo.nologo’ : removes Raspberry Pi logo in top left corner.
+    ‘vt.global_cursor_default=0’ : removes blinking cursor.
+    Note : The first three should be there by default, but make sure if those exist.
+    Replace Splash Image
+    Now, everything unwanted images and texts are gone. Let’s replace the default splash image (/usr/share/plymouth/themes/pix/splash.png) with your own splash image.
+    sudo cp ~/my_splash.png /usr/share/plymouth/themes/pix/splash.png
+--------------------------------------------------------------RASPI SETUP 2---------------------
+    # static ip for raspberry
+
+    How to set up up your Raspberry Pi to have a static IP address
+    Usually when you connect a Raspberry Pi to a Local Area Network (LAN) it is automatically assigned an IP address. Typically, this address will change each time you connect.
+    Sometimes, however, you might want your Pi to boot up with the same IP address each time. This can be useful if you are making a small self contained network, or building a standalone project such as a robot. Here's how to do it.
+    Setup
+    Edit the file /etc/dhcpcd.conf as follows:
+    Type sudo nano /etc/dhcpcd.conf at the command prompt.
+    Scroll to the bottom of the script, and add the following lines:
+    interface eth0
+    static ip_address=192.168.0.2/24
+    static routers=192.168.0.1
+    static domain_name_servers=192.168.0.1
+    interface wlan0
+    static ip_address=192.168.0.2/24
+    static routers=192.168.0.1
+    static domain_name_servers=192.168.0.1
+    Save the file with ctrl + o and then exit nano with ctrl + x.
+    Your Raspberry Pi will now boot up with the IP address 192.168.0.2 every time; we didn't use 192.168.0.1 as this is reserved for the router. You can of course use any address you like, but in the configuration above the range must be between 192.168.0.2 and 192.168.0.255.
+    Testing
+    Reboot with sudo reboot.
+    Log in and type ip a.
+    You should see the IP address you set in the eth0: or wlan0 entry.
+    Troubleshooting
+    If your Pi is not networked then the IP address may not show. To fix this, connect your Pi to an active network socket, which can be on another running Raspberry Pi; you can also manually bring up (activate) the network interface by typing sudo ifup eth0 followed by ip a.
+    If you still cannot see your IP address, or it is different to the one you set, then open the dhcpcd.conf file, as described in step 1 of the setup instructions, and check that your edits are correct.
+    Clean up - reverting the changes
+    Normally you don't want your computer set to use a static IP address. You can change the network configuration back by editing the dhcpcd.conf file as follows:
+    Type sudo nano /etc/dhcpcd.conf at the command prompt.
+    Look for the lines you added.
+    interface eth0
+    static ip_address=192.168.0.2/24
+    static routers=192.168.0.1
+    static domain_name_servers=192.168.0.1
+    interface wlan0
+    static ip_address=192.168.0.2/24
+    static routers=192.168.0.1
+    static domain_name_servers=192.168.0.1
+    Remove these lines and then save the file ctrl + o and exit ctrl + x
+    Reboot the Raspberry Pi.
+    -------------------------------------------------------RASPI SETUP 3--------------------
+    # Install screensaver for raspberry
+    sudo apt-get install xscreensaver
+
+    sudo nano /boot/config.txt
+    # Disable Bluetooth
+    dtoverlay=pi3-disable-bt
+
+    # Remove wolfram
+    sudo apt-get remove wolfram-engine
+    sudo rm /usr/share/raspi-ui-overrides/applications/wolfram-language.desktop/usr/share/raspi-ui-overrides/applications/wolfram-mathematica.desktop
+
+    # disable ipv6 raspberrypi
+    ifconfig
+    sudo nano /etc/sysctl.conf # add this line - net.ipv6.conf.all.disable_ipv6 = 1
+    sudo sysctl -p
+    netstat -lnpt
+    /etc/modprobe.d/ipv6.conf
+    sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+    sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+    or:
+    Add “ipv6.disable=1” (without the quotes) to /boot/cmdline.txt
+    cat /etc/modprobe.d/ipv6.conf
+    # Don't load ipv6 by default
+    alias net-pf-10 off
+    #alias ipv6 off
+    # added to disable ipv6
+    options ipv6 disable_ipv6=1
+    # added to prevent ipv6 driver from loading
+    blacklist ipv6
+
+    # SSH for raspberry
+    ping moonpi.local
+    sudo nano /etc/hostname
+    sudo nano /etc/hosts
+    sudo ssh pi@
+
+    vtd vurtyakatuib
+
+    # Netflix for raspberrypi
+    https://github.com/nateg5/Android/blob/master/NateCast/README.md
+    # All needed
+    sudo dpkg -i chromium-browser_56.0.2924.84-0ubuntu0.14.04.1.1011.deb
+
+    # Run raspberrypi headless
+    https://www.losant.com/blog/getting-started-with-the-raspberry-pi-zero-w-without-a-monitor
+    raspi-config
+    1) Choose first 'update
+    2) In advanced options -> expand_root file system
+    3) interfacing options -> ssh [enable]
+    4) change_locale [your country-UTF8] and if you still here, it's good to change the timezone as well
+    5) change the default fword (don't be lazy, just do it :) 
+
+    # Disable Wifi
+    dtoverlay=pi3-disable-wifi
+
+    # GPG receive keys
+    gpg --keyserver hkp://keys.gnupg.net --recv-keys XXXXXXXXX
+
+    deb http://archive.raspbian.org/raspbian wheezy main contrib non-free
+    deb-src http://archive.raspbian.org/raspbian wheezy main contrib non-free
+    -----------------------------------------------------------JAPANESE--------------------------
+    The setting method is summarized. 
+    Mint (change locale)
+    sudo apt-get -y install language-pack-ja-base language-pack-ja 
+    localectl set-locale LANG=ja_JP.UTF-8 LANGUAGE="ja_JP:ja" 
+    Preferences: Languages
+    dpkg-reconfigure locales
+    sudo locale-gen ja_JP.UTF-8
+    sudo apt-get install ttf-kochi-gothic xfonts-intl-japanese xfonts-intl-japanese-big xfonts-kaname fonts-takao-mincho fonts-takao
+    sudo apt-get install ibus
+    sudo apt-get install ibus-hangul
+    sudo apt-get install ttf-unfonts-core
+    sudo apt-get install ibus-anthy; ibus-daemon -drx; ibus-setup 
+    https://addons.mozilla.org/en-US/firefox/addon/japanese-language-pack-1/
+    Raspberry (change locale)
+    1. change locale
+    $ sudo raspi-config
+    change_locale
+    ja_JP.EUC-JP EUC-JP
+    ja_JP.UTF-8 UTF-8
+    2. install japanese fonts
+    sudo apt-get install ttf-kochi-gothic xfonts-intl-japanese xfonts-intl-japanese-big xfonts-kaname fonts-takao-mincho fonts-takao
+    3. install "iBus-Anthy"
+    sudo apt-get install ibus-anthy; ibus-daemon -drx; ibus-setup 
+    setup
+    in ibus-setup window:
+    select [インプットメソッド (input method)] tab
+    select [インプットメソッドの選択 (input method)] list
+    select [日本語 (Japanese)]->[Anthy] in list
+    select [追加 (append)] buttondfdfd
+    select [閉じる (close)] button
+    Open terminal
+    sudo apt-get install ibus
+    sudo apt-get install ibus-hangul
+    sudo apt-get install ttf-unfonts-core
+
+    A setup of the Japanese input is explained to this page.
+    http://ngc1952.net/archives/991
+    http://linux99.exblog.jp/15920177
+    ----------------------------------------------------------InstaPy----------------------------------
+sudo nano unfollow_util.py
+
+import random
+import time
+from time import sleep
+from random import randint
+
+                if person not in dont_include:
+                    logger.info(
+                        "Ongoing Unfollow [{}/{}]: now unfollowing '{}'..."
+                        .format(unfollowNum+1, amount, person.encode('utf-8')))
+
+                    print("sleeping for unfollow 45-49 seconds. oof")
+                    time.sleep(random.randint(45, 49))
+
+                    person_id = (automatedFollowedPool["all"][person]["id"] if
+                                person in automatedFollowedPool["all"].keys() else False)
+
+    # get the post-follow delay time to sleep
+    naply = get_action_delay("follow")
+    sleep(naply)
+
+    print("sleeping for follow 48-52 seconds. oof2")
+    time.sleep(random.randint(49, 54))
+
+    return True, "success"
+ 
+************************************************************
+
+sudo nano like_util.py
+
+import random
+import time
+from time import sleep
+from random import randint
+
+            if blacklist['enabled'] is True:
+                action = 'liked'
+                add_user_to_blacklist(
+                    username, blacklist['campaign'], action, logger, logfolder)
+
+            # get the post-like delay time to sleep
+            naply = get_action_delay("like")
+            sleep(naply)
+
+            #print("sleeping for like 60-65 seconds. oof")
+            #time.sleep(random.randint(80, 90))
+
+************************************************************
+
+sudo nano comment_util.py
+
+import random
+import time
+from time import sleep
+from random import randint
+
+    # get the post-comment delay time to sleep
+    naply = get_action_delay("comment")
+    sleep(naply)
+
+    #print("sleeping for comment 320-340 seconds. oof2")
+    #time.sleep(random.randint(320, 340))
+
+    return True, "success"
+
+************************************************************
+
+""" Quickstart script for InstaPy usage """
+# imports
+from instapy import InstaPy
+from instapy.util import smart_run
+
+# login credentials
+insta_username = ''
+insta_password = ''
+
+# set headless_browser=True to run InstaPy in the background
+session = InstaPy(username=insta_username,
+                  password=insta_password,
+                  headless_browser=True)
+
+with smart_run(session):
+    """ Activity flow """
+    session.set_skip_users(skip_private=True,
+                   private_percentage=100,
+                   skip_no_profile_pic=True,
+                   no_profile_pic_percentage=100,
+                   skip_business=True,
+                   business_percentage=100,)
+
+    session.set_relationship_bounds(enabled=True,
+                                     potency_ratio=None,
+                                      delimit_by_numbers=True,
+                                       max_followers=4000,
+                                        max_following=3000,
+                                         min_followers=15,
+                                          min_following=15)
+    #session.set_user_interact(amount=2, randomize=True, percentage=100, media=$
+    #session.set_do_follow(enabled=True, percentage=100)
+    #session.set_do_like(enabled=True, percentage=100)
+    session.set_delimit_liking(enabled=True, max=300, min=None)
+    session.set_delimit_commenting(enabled=True, max=10, min=0)
+    #session.set_do_comment(enabled=True, percentage=15)
+    #session.interact_user_followers([''], amount=80$
+    #session.set_user_interact(amount=2, randomize=True, percentage=100, media=$
+    #session.follow_user_followers([''], amount=2000, randomize=False)
+    #session.unfollow_users(amount=7500, nonFollowers=True, style="RANDOM", unfollow_after=48*60*60, sleep_delay=1)
+    # actions
+    #session.like_by_tags(['18'], amount=2000)
+    #session.like_by_locations([''], amount=1000, skip_top_posts=True)
+    #session.like_by_locations([''], amount=1000, skip_top_posts=True)
+
+    session.set_user_interact(amount=1, randomize=True, percentage=100, media='Photo')
+    session.set_do_follow(enabled=True, percentage=100)
+    session.set_do_like(enabled=True, percentage=100)
+    session.set_comments(["😀", "😁", "😂", "🤣", "😃", "😄", "😅", "😆", "😉", "😊", "😋", "😎", "😍", "😘", "😗", "😙", "😚", "🤩", "🤗", "😛", "😜", "😝", "🤤", "🤑", "🙃", "😭", "😩", "😱", "🤪", "😷", "😇", "😈", "👿", "😺", "😾", "😿", "🙀", "😽", "😼", "😻", "😹", "😸", "👼", "👌", "👋", "👏", "👀", "👋🏻", "👌🏼", "🐸", "🐯", "🐬", "🐠", "🐧", "💫", "⭐️", "🌟", "✨", "⚡️", "☄️", "💥", "🔥", "❄️", "☃️", "🍓", "🍭", "🚀", "🌠", "🌌", "❤️", "🧡", "💛", "💙", "💘", "💟", "💝", "💖", "💓", "💞", "💕", "❣️", "💔", "🖤", "💜", "💚", "😀💖", "😁💖", "😂💖", "🤣💖", "😃💖", "😄💖", "😅💖", "😆💖", "😉💖", "😊💖", "😋💖", "😎💖", "😍💖", "😘💖", "😗💖", "😙💖", "😚💖", "🤩💖", "🤗💖", "😛💖", "😜💖", "😝💖", "🤤💖", "🤑💖", "🙃💖", "😭💖", "😩💖", "😱💖", "🤪💖", "😷💖", "😇💖", "😈💖", "👿💖", "😺💖", "😾💖", "😿💖", "🙀💖", "😽💖", "😼💖", "😻💖", "😹💖", "😸💖", "👼💖", "👌💖", "👋💖", "👏💖", "👀💖", "👋🏻💖", "👌🏼💖", "🐸💖", "🐯💖", "🐬💖", "🐠💖", "🐧💖", "💫💖", "⭐️💖", "🌟💖", "✨💖", "⚡️💖", "☄️💖", "💥💖", "🔥💖", "❄️💖", "☃️💖", "🍓💖", "🍭💖", "🚀💖", "🌠💖", "🌌💖", "❤️💖", "🧡💖", "💛💖", "💙💖", "💘💖", "💟💖", "💝💖", "💖💖", "💓💖"])
+    session.set_do_comment(enabled=True, percentage=15)
+    session.interact_user_followers([''], amount=1200, randomize=True
+    ---------------------------------------------------- wget instapy-------------------------------------------
+    Chrome-Stable
+    cd ~
+    wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+    sudo dpkg -i google-chrome-stable_current_amd64.deb
+    sudo apt-get install -y -f
+    sudo rm google-chrome-stable_current_amd64.deb
+    InstaPy:
+    sudo wget https://github.com/timgrossmann/InstaPy/archive/master.zip
+    sudo unzip master.zip
+    latest_version=$(wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE -O -)
+    sudo wget https://chromedriver.storage.googleapis.com/${latest_version}/chromedriver_linux64.zip
+    sudo unzip chromedriver_linux64
+    mv chromedriver /home/ubuntu/xmasbot/assets/chromedriver
+    sudo chmod +x /home/ubuntu/newbot3/assets/chromedriver && sudo chmod 755 /home/ubuntu/newbot3/assets/chromedriver
+    cd - && sudo python3 setup.py install
+    python3 setup.py install
+    -----------------------------------------------------------RANDOM---------------------------------------------
+        # Format USB as ntfs
+    fdisk -l
+    sudo fdisk /dev/***
+    d
+    n
+    p
+    ( enter 3 times )
+    w
+    exit
+    sudo mkfs -t ntfs -I /dev/*** ~
+    cd /media/pi
+    mkdir usbstick
+    sudo mount /dev/sdc usbstick -o umask=000
+    cd ~
+    sudo umount usbstick
+
+    # Format SD card
+    fdisk -l
+    fdisk /dev/mmcblk0
+    d
+    p
+    n
+    p
+    t
+    p
+    w
+    mkfs.vfat /dev/mmcblk0p1
+    
+    #SD-card-copier-FAT
+    lsblk
+    fdisk /dev/sda
+    d
+    p
+    n
+    p
+    t
+    L
+    b
+    w
+    mkfs.fat /dev/sda
+
+    # Mounting Format USB
+    Press Ctrl+Alt+T to run Terminal.
+    Enter sudo mkdir /media/usb to create a mount point called usb.
+    Enter sudo fdisk -l to look for the USB drive already plugged in, let's say the drive you want to mount is /dev/sb1.
+    To mount a USB drive formatted with FAT16 or FAT32 system, enter:
+    ***sudo mount -t vfat /dev/sdc /media/usb -o uid=1000,gid=100,utf8,dmask=027,fmask=137
+    OR, To mount a USB drive formatted with NTFS system, enter:
+    sudo mount -t ntfs-3g /dev/sdc /media/usb
+    To unmount it, just enter sudo umount /media/usb in the Terminal.
+    List file size of file in terminal = ls -l filename
+    
+    sudo chmod a+rw /dev/ttyUSB0
+    sudo adduser user5 dialout
+    sudo rfkill block wifi
+    sudo rfkill unblock wifi
+    sudo rfkill block bluetooth
+    sudo rfkill unblock bluetooth
+    sudo systemctl disable hciuart.service
+    sudo systemctl disable bluealsa.service
+    sudo systemctl disable bluetooth.service
+    "rfkill block all" will do both, and "rfkill unblock all"
+    sudo ifconfig # get ip address
+    sudo modprobe bcm2835-v4l2
+    sudo apt-get install ntfs-3g
+    sudo nano /etc/default/grub
+    ffmpeg -i in.mov -map_metadata -1 -c:v copy -c:a copy out.mov
+    chmod +x /home/pi/temp.py
+    sudo modprobe bcm2835-v4l2
+    
+    
+    nmap -sT 10.0.0.33
+    netstat -ap
+    tcpdump
+    runlevel
+    dmesg
+    ----------------------------------------------------------------------------------------
