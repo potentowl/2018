@@ -2,6 +2,9 @@
     sudo add-apt-repository ppa:gezakovacs/ppa
     sudo apt-get update
     sudo apt install unetbootin
+    ALT
+    chmod +x ./unetbootin-linux
+    ./unetbootin-linux
 ---------------------------------------------------INSTALL PYTHON 3.6-----------------------
 
     sudo apt-get install python3-dev libffi-dev libssl-dev
