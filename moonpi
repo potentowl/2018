@@ -1,3 +1,6 @@
+
+---------------------------------------------------Photo-EXIF-Eraser------------------------
+    for i in *.jpg; do echo "Processing $i"; exiftool -all= "$i"; done
 ---------------------------------------------------INSTALL Unetbootin-----------------------
     sudo add-apt-repository ppa:gezakovacs/ppa
     sudo apt-get update
