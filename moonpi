@@ -1,5 +1,5 @@
 ---------------------------------------------------Customize-Mint---------------------------
-    cd /home/penguin./themes/Mint-Y-Dark-Blue/cinammon.css
+    /home/penguin/usr/share/themes/Mint-Y-Dark-Blue/cinammon.css copy /home/penguin/.themes/Mint-Y-Dark-Blue/cinammon.css
 ---------------------------------------------------LIVEWALLPAPER----------------------------
 
     sudo add-apt-repository ppa:fyrmir/livewallpaper-daily
