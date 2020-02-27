@@ -1,4 +1,8 @@
+---------------------------------------------------LIVEWALLPAPER----------------------------
 
+    sudo add-apt-repository ppa:fyrmir/livewallpaper-daily
+    sudo apt-get update && sudo apt-get install livewallpaper
+    sudo apt-get install livewallpaper-config livewallpaper-indicator
 --------------------------------------Script to install geckodriver on Ubuntu---------------
     #!/bin/bash
 
