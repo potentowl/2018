@@ -1,6 +1,7 @@
 ---------------------------------------------------Customize-Mint---------------------------
     /home/penguin/usr/share/themes/Mint-Y-Dark-Blue/cinammon.css copy /home/penguin/.themes/Mint-Y-Dark-Blue/cinammon.css
-    #FF0000 	rgb(255,0,0)
+    curl wttr.in/New+York
+    https://github.com/Fruitsalad/No-Titlebars-theme-for-Cinnamon
 ---------------------------------------------------LIVEWALLPAPER----------------------------
 
     sudo add-apt-repository ppa:fyrmir/livewallpaper-daily
