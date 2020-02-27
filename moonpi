@@ -1,3 +1,6 @@
+---------------------------------------------------Install-Steam----------------------------
+sudo add-apt-repository multiverse
+    sudo apt update && sudo apt install steam
 ---------------------------------------------------Customize-Mint---------------------------
     /home/penguin/usr/share/themes/Mint-Y-Dark-Blue/cinammon.css copy /home/penguin/.themes/Mint-Y-Dark-Blue/cinammon.css
     curl wttr.in/New+York
