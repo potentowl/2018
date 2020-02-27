@@ -1,6 +1,5 @@
 
 --------------------------------------Script to install geckodriver on Ubuntu---------------
-
     #!/bin/bash
 
     INSTALL_DIR="/usr/local/bin"
@@ -11,6 +10,8 @@
     chmod +x geckodriver
     sudo mv geckodriver "$INSTALL_DIR"
     echo "installed geckodriver binary in $INSTALL_DIR"
+---------------------------------------------------RAINBOWSTREAM----------------------------
+    sudo pip3 install rainbowstream :P
 ---------------------------------------------------Photo-EXIF-Eraser------------------------
     for i in *.jpg; do echo "Processing $i"; exiftool -all= "$i"; done
 ---------------------------------------------------INSTALL Unetbootin-----------------------
