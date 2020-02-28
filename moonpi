@@ -372,7 +372,7 @@ with smart_run(session):
     sudo chmod +x /home/ubuntu/newbot3/assets/chromedriver && sudo chmod 755 /home/ubuntu/newbot3/assets/chromedriver
     cd - && sudo python3 setup.py install
     sudo pip3 install -r requirements.txt
-    pip install clarifai --upgrade
+    python3 -m pip install clarifai --upgrade
     -----------------------------------------------------------RANDOM---------------------------------------------
         # Format USB as ntfs
     fdisk -l
