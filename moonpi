@@ -373,6 +373,7 @@ with smart_run(session):
     cd - && sudo python3 setup.py install
     sudo pip3 install -r requirements.txt
     python3 -m pip install clarifai --upgrade
+    chown -R  root user
     -----------------------------------------------------------RANDOM---------------------------------------------
         # Format USB as ntfs
     fdisk -l
