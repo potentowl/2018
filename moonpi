@@ -1,15 +1,11 @@
----------------------------------------------------Install-Steam----------------------------
-    sudo add-apt-repository multiverse
-    sudo apt update && sudo apt install steam
----------------------------------------------------Customize-Mint---------------------------
-    /home/penguin/usr/share/themes/Mint-Y-Dark-Blue/cinammon.css copy /home/penguin/.themes/Mint-Y-Dark-Blue/cinammon.css
-    curl wttr.in/New+York
-    https://github.com/Fruitsalad/No-Titlebars-theme-for-Cinnamon
----------------------------------------------------LIVEWALLPAPER----------------------------
 
+---------------------------------------------------Mint19.3---------------------------------
+    https://github.com/Fruitsalad/No-Titlebars-theme-for-Cinnamon
+    sudo add-apt-repository multiverse
+    sudo apt update && sudo apt install steam -Y && sudo apt-get install cmus -Y
+    sudo apt install python3-pip -Y && sudo pip3 install rainbowstream -Y
     sudo add-apt-repository ppa:fyrmir/livewallpaper-daily
     sudo apt-get update && sudo apt-get install -y livewallpaper && sudo apt-get install -y livewallpaper-config livewallpaper-indicator
-
 --------------------------------------Script to install geckodriver on Ubuntu---------------
     #!/bin/bash
 
@@ -21,9 +17,6 @@
     chmod +x geckodriver
     sudo mv geckodriver "$INSTALL_DIR"
     echo "installed geckodriver binary in $INSTALL_DIR"
----------------------------------------------------RAINBOWSTREAM----------------------------
-    sudo apt install python3-pip
-    sudo pip3 install rainbowstream
 ---------------------------------------------------Photo-EXIF-Eraser------------------------
     for i in *.jpg; do echo "Processing $i"; exiftool -all= "$i"; done
 ---------------------------------------------------INSTALL Unetbootin-----------------------
