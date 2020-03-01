@@ -8,8 +8,8 @@
 ---------------------------------------------------LIVEWALLPAPER----------------------------
 
     sudo add-apt-repository ppa:fyrmir/livewallpaper-daily
-    sudo apt-get update && sudo apt-get install livewallpaper
-    sudo apt-get install livewallpaper-config livewallpaper-indicator
+    sudo apt-get update && sudo apt-get install -y livewallpaper && sudo apt-get install -y livewallpaper-config livewallpaper-indicator
+
 --------------------------------------Script to install geckodriver on Ubuntu---------------
     #!/bin/bash
 
@@ -22,13 +22,12 @@
     sudo mv geckodriver "$INSTALL_DIR"
     echo "installed geckodriver binary in $INSTALL_DIR"
 ---------------------------------------------------RAINBOWSTREAM----------------------------
-    sudo pip3 install rainbowstream :P
+    sudo apt install python3-pip
+    sudo pip3 install rainbowstream
 ---------------------------------------------------Photo-EXIF-Eraser------------------------
     for i in *.jpg; do echo "Processing $i"; exiftool -all= "$i"; done
 ---------------------------------------------------INSTALL Unetbootin-----------------------
-    sudo add-apt-repository ppa:gezakovacs/ppa
-    sudo apt-get update
-    sudo apt install unetbootin
+    sudo add-apt-repository ppa:gezakovacs/ppa &&  apt-get update && sudo apt install unetbootin -y
     ALT
     chmod +x ./unetbootin-linux
     ./unetbootin-linux
