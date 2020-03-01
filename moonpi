@@ -1,4 +1,10 @@
-
+---------------------------------------------------InstaPy---------------------------------
+    sudo wget https://github.com/timgrossmann/InstaPy/archive/master.zip
+    sudo apt-get install unzip -Y && sudo unzip master.zip && sudo apt install python3-pip -Y
+    sudo pip3 install -r requirements.txt
+    cd - && sudo python3 setup.py install
+    python3 -m pip install clarifai --upgrade
+    chown -R  root user
 ---------------------------------------------------Mint19.3---------------------------------
     https://github.com/Fruitsalad/No-Titlebars-theme-for-Cinnamon
     sudo add-apt-repository multiverse
@@ -350,18 +356,11 @@ with smart_run(session):
     sudo dpkg -i google-chrome-stable_current_amd64.deb
     sudo apt-get install -y -f
     sudo rm google-chrome-stable_current_amd64.deb
-    InstaPy:
-    sudo wget https://github.com/timgrossmann/InstaPy/archive/master.zip
-    sudo unzip master.zip
     latest_version=$(wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE -O -)
     sudo wget https://chromedriver.storage.googleapis.com/${latest_version}/chromedriver_linux64.zip
     sudo unzip chromedriver_linux64
     mv chromedriver /home/ubuntu/xmasbot/assets/chromedriver
     sudo chmod +x /home/ubuntu/newbot3/assets/chromedriver && sudo chmod 755 /home/ubuntu/newbot3/assets/chromedriver
-    cd - && sudo python3 setup.py install
-    sudo pip3 install -r requirements.txt
-    python3 -m pip install clarifai --upgrade
-    chown -R  root user
     -----------------------------------------------------------RANDOM---------------------------------------------
         # Format USB as ntfs
     fdisk -l
