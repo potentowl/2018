@@ -46,13 +46,9 @@
     gpg --keyserver hkp://keys.gnupg.net --recv-keys XXXXXXXXXXXXXXXXXXXXXX
 			
 -------------------------------------------------------VirtualBox----------------------------
-    sudo apt install virtualbox
-    sudo apt install virtualbox-qt
-    virtualbox
-    sudo apt install virtualbox-ext-pack
-    sudo apt remove virtualbox
-    sudo apt purge virtualbox
-    Select Preferences from the File menu and then select the Extensions option from the left panel of the following Preferences view:
+    sudo apt install -y virtualbox && sudo apt install -y virtualbox-qt && -y sudo apt install virtualbox-ext-pack
+    sudo apt remove virtualbox -y && sudo apt purge virtualbox -y
+    Select Preferences from the File menu; select the Extensions; left panel
     ----------------------------------------------------------RASPI SETUP 1----------------------
     
     Replace the file /usr/share/plymouth/themes/pix/splash.png with your own (or just remove it for a blank screen)
