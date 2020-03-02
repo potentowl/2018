@@ -3,6 +3,7 @@
     sudo apt-get install unzip -Y && sudo unzip master.zip && sudo apt install python3-pip -Y
     sudo pip3 install setuptools && sudo pip3 install -r requirements.txt && sudo python3 setup.py install
     python3 -m pip install clarifai --upgrade
+    cd /home
     chown -R root user
 ---------------------------------------------------Mint19.3---------------------------------
     https://github.com/Fruitsalad/No-Titlebars-theme-for-Cinnamon
