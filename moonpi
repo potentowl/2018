@@ -9,7 +9,7 @@
     https://github.com/Fruitsalad/No-Titlebars-theme-for-Cinnamon
     sudo add-apt-repository multiverse
     sudo apt update && sudo apt install steam -Y && sudo apt-get install cmus -Y
-    sudo apt install python3-pip -Y && sudo pip3 install rainbowstream -Y && sudo apt-get install screenfetch
+    sudo apt install python3-pip -Y && sudo pip3 install setuptools && sudo pip3 install rainbowstream -Y && sudo apt-get install screenfetch
     sudo add-apt-repository ppa:fyrmir/livewallpaper-daily
     sudo apt-get update && sudo apt-get install -y livewallpaper && sudo apt-get install -y livewallpaper-config livewallpaper-indicator
 --------------------------------------Script to install geckodriver on Ubuntu---------------
