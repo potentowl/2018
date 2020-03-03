@@ -1,10 +1,16 @@
 ---------------------------------------------------InstaPy---------------------------------
     sudo wget https://github.com/timgrossmann/InstaPy/archive/master.zip
     sudo apt-get install unzip -y && sudo unzip master.zip && sudo apt install python3-pip -y
-    sudo pip3 install setuptools && sudo pip3 install -r requirements.txt && sudo python3 setup.py install
+    sudo pip3 install setuptools && sudo pip3 install wheel && sudo pip3 install -r requirements.txt && sudo python3 setup.py install
     python3 -m pip install clarifai --upgrade
     cd /home
     chown -R root user
+    firefox --version Mozilla Firefox 73.0.1
+    sudo python3 -m pip install -U selenium
+    pip3 freeze
+    chmod +x geckodriver
+    export PATH=$PATH:/path-to-extracted-file/
+    chmod -R 777
 ---------------------------------------------------Mint19.3---------------------------------
     https://github.com/Fruitsalad/No-Titlebars-theme-for-Cinnamon
     sudo add-apt-repository multiverse
