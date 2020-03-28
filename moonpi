@@ -463,27 +463,32 @@ with picamera.PiCamera() as camera:
     camera.stop_recording()
     camera.stop_preview()
 ----------------------------------------------------------Mouse-location--------------
-#! python3
-# mouseNow.py - Displays the mouse cursor's current position.
-import pyautogui
-print('Press Ctrl-C to quit.')
-try:
-    while True:
-        x, y = pyautogui.position()
-        positionStr = 'X: ' + str(x).rjust(4) + ' Y: ' + str(y).rjust(4)
-        positionStr = 'X: ' + str(x).rjust(4) + ' Y: ' + str(y).rjust(4)
-        pixelColor = pyautogui.screenshot().getpixel((x, y))
-        positionStr += ' RGB: (' + str(pixelColor[0]).rjust(3)
-        positionStr += ', ' + str(pixelColor[1]).rjust(3)
-        positionStr += ', ' + str(pixelColor[2]).rjust(3) + ')'
-        print(positionStr, end='')
-        print('\b' * len(positionStr), end='', flush=True)
-except KeyboardInterrupt:
-    print('\nDone.')
-    
-#EASY
 import pyautogui
 pyautogui.displayMousePosition()
+
+sudo apt-get install python3-opencv
+
+import sys
+import pyautogui
+pyautogui.PAUSE = 0.4
+pyautogui.FAILSAFE = True
+# Ctrl-C quits script
+while True:
+        pyautogui.click(1310, 290)
+        pyautogui.scroll(-10)
+
+        loc = pyautogui.locateOnScreen('submit.png', grayscale=True, confidence=.9)
+        pyautogui.click(loc)
+        loc = pyautogui.locateOnScreen('submit.png', grayscale=True, confidence=.9)
+        pyautogui.click(loc)
+        loc = pyautogui.locateOnScreen('submit.png', grayscale=True, confidence=.9)
+        pyautogui.click(loc)
+        loc = pyautogui.locateOnScreen('submit.png', grayscale=True, confidence=.9)
+        pyautogui.click(loc)
+        loc = pyautogui.locateOnScreen('submit.png', grayscale=True, confidence=.9)
+        pyautogui.click(loc)
+        loc = pyautogui.locateOnScreen('submit.png', grayscale=True, confidence=.9)
+        pyautogui.click(loc)
 ----------------------------------------------------------Twitter-keys----------------
 # Save Key File In Same Directory As Python Scripts For Twitter
 # Twitter用のPythonスクリプトと同じディレクトリにキーファイルを保存する
