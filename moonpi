@@ -12,6 +12,9 @@
     export PATH=$PATH:/path-to-extracted-file/
     chmod -R 777
 ---------------------------------------------------Mint19.3---------------------------------
+    sudo add-apt-repository ppa:openshot.developers/ppa
+    sudo apt-get update
+    sudo apt-get install openshot-qt
     https://github.com/Fruitsalad/No-Titlebars-theme-for-Cinnamon
     sudo add-apt-repository multiverse
     sudo apt update && sudo apt install steam -y && sudo apt-get install cmus -y
