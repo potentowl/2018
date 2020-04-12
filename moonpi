@@ -20,6 +20,7 @@
     sudo apt update && sudo apt install steam -y && sudo apt-get install cmus -y
     sudo apt install python3-pip -y && sudo apt-get install build-essentials && sudo pip install rainbowstream -y && sudo apt-get install screenfetch
     sudo add-apt-repository ppa:fyrmir/livewallpaper-daily
+    sudo add-apt-repository ppa:otto-kesselgulasch/gimp && sudo apt update && sudo apt install gimp
     sudo apt-get update && sudo apt-get install -y livewallpaper && sudo apt-get install -y livewallpaper-config livewallpaper-indicator
 --------------------------------------Script to install geckodriver on Ubuntu---------------
     #!/bin/bash
@@ -559,9 +560,7 @@ for f in friends:
         time.sleep(randint(30,60))
 ----------------------------------------------------------Multi-Lights-----------------
 # -*- coding: utf-8 -*-
-
 # blue wire neutral (main ground) a1 gray wire-GPIO.pin.17/d1-g1 resistor/j1-cled positive wire(longer led wire) repeat for each led.
-
 
 import RPi.GPIO as GPIO
 import time
