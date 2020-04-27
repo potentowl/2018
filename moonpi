@@ -1,4 +1,6 @@
 ---------------------------------------------------AutoHotKey---------------------------
+# Auto Follow-Unfollow
+
 import pyautogui
 pyautogui.displayMousePosition()
 
