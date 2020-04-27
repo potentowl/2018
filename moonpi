@@ -1,3 +1,57 @@
+---------------------------------------------------PyAutoGUI-------------------------------
+import pyautogui
+pyautogui.displayMousePosition()
+
+#from timeit import default_timer as timer
+from datetime import datetime
+from notify_run import Notify
+from time import sleep
+from time import gmtime, strftime
+import os
+import sys
+import time
+import pyautogui
+pyautogui.FAILSAFE = True
+
+counter = 0
+counter1 = [0,0]
+#start = timer()
+start_time = datetime.now()
+
+end_time = datetime.now()
+# START CODE BLOCK x17
+for _ in range(40):
+    pyautogui.click(1343, 211)
+    pyautogui.scroll(-11)
+    time.sleep(0.5)
+    loc = pyautogui.locateOnScreen('submit2.png', grayscale=True, confidence=.9, region = (1103, 127, 150, 600))
+    if loc is None:
+        counter1[0] += 1 #total counter
+        counter1[1] += 1 #concurrent hits
+        #print("Miss_#{}".format(counter1[0]))
+        pyautogui.click(1343, 211)
+    else:        
+        counter1[1] = 0 #concurrent reset to 0 when else is triggered
+        counter += 1
+        #print("Hit_#{}".format(counter))
+        pyautogui.click(loc)
+        #print(time.strftime("%a, %d %b %Y %H:%M:%S +0000"))
+        time_elapsed = datetime.now() - start_time
+        #print('Time elapsed (hh:mm:ss.ms) {}'.format(time_elapsed))
+        print('\033[37m' '\033[41m' '\033[1m' + ("#{}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀".format(counter)) + '{}⠀\033[1m'.format(time_elapsed))
+        print('Total Duration: {}'.format(end_time - start_time))
+        file = "ding.mp3"
+        os.system("mpg123 -q " + file)
+        time.sleep(0.5)
+# END CODE BLOCK	 
+    if counter1[1] > 37:
+        time_elapsed = datetime.now() - start_time
+        print('\033[37m' '\033[41m' '\033[1m' + ("#{}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀".format(counter)) + '{}⠀\033[1m'.format(time_elapsed))
+        print('Total Duration: {}'.format(end_time - start_time))
+        file = "ding.mp3"
+        os.system("mpg123 -q " + file)
+    else:
+        continue
 ---------------------------------------------------InstaPy---------------------------------
     sudo wget https://github.com/timgrossmann/InstaPy/archive/master.zip
     sudo apt-get install unzip -y && sudo unzip master.zip && sudo apt install python3-pip -y
