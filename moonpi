@@ -3320,7 +3320,8 @@ for _ in range(40):
     https://github.com/Fruitsalad/No-Titlebars-theme-for-Cinnamon
     sudo add-apt-repository multiverse
     sudo apt update && sudo apt install steam -y && sudo apt-get install cmus -y
-    sudo apt install python3-pip -y && sudo apt-get install build-essentials && sudo pip install rainbowstream -y && sudo apt-get install screenfetch
+    sudo apt install python3-pip -y && sudo apt-get install build-essentials && sudo apt-get install screenfetch
+    sudo pip3 install rainbowstream
     sudo add-apt-repository ppa:fyrmir/livewallpaper-daily
     sudo add-apt-repository ppa:otto-kesselgulasch/gimp && sudo apt update && sudo apt install gimp
     sudo apt-get update && sudo apt-get install -y livewallpaper && sudo apt-get install -y livewallpaper-config livewallpaper-indicator
@@ -3601,7 +3602,7 @@ from random import randint
 
     # get the post-comment delay time to sleep
     naply = get_action_delay("comment")
-    sleep(naply)
+rainbow    sleep(naply)
 
     #print("sleeping for comment 320-340 seconds. oof2")
     #time.sleep(random.randint(320, 340))
